@@ -1,0 +1,290 @@
+/* --- 1. 核心設定 --- */
+:root {
+    --brand-blue: #1736F5;
+    --brand-dark: #0b1a7a;
+    --accent-yellow: #FFC709;
+    --text-dark: #333333;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--brand-blue);
+    background-image: radial-gradient(circle at 50% 10%, #4c6aff 0%, var(--brand-blue) 40%, var(--brand-dark) 100%);
+    font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px 120px 20px;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* --- 2. 標題區 (透明度 0.8) --- */
+.header-card {
+    grid-column: span 3;
+    background: rgba(255, 255, 255, 1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 30px;
+    padding: 40px;
+    text-align: left;
+    position: relative;
+    /* overflow: hidden; [已移除] 讓圖片可以超出 */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* [新增] 提高這個卡片的層級，確保裡面的漂浮圖片不會被下方的卡片遮住 */
+    z-index: 20; 
+}
+
+/* 大標題加粗 */
+.header-content h1 { 
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 900;
+    
+    font-size: 3rem; 
+    margin-bottom: 10px; 
+    color: var(--brand-blue); 
+    line-height: 1.1;
+}
+
+.header-content p { 
+    font-size: 1.2rem; 
+    color: #333; 
+    font-weight: 600;
+}
+
+.header-tag {
+    background: var(--accent-yellow);
+    color: var(--brand-blue);
+    font-weight: 900;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+/* 漂浮圖片樣式與動畫 */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+.floating-mascot {
+    position: absolute;
+    right: -80px; 
+    top: -60px;  
+    width: 350px; 
+    height: auto;
+    z-index: 10; /* 這個 z-index 是相對於 header-card 的 */
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none; 
+}
+
+
+/* --- 3. 通用新聞卡片 (透明度 0.5) --- */
+.news-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-card:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* 日期標籤 */
+.date-badge {
+    background: var(--brand-blue);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    align-self: flex-start;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.date-badge.new { background: var(--accent-yellow); color: var(--brand-blue); }
+
+/* 新聞標題加粗 */
+.news-title {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 900;
+    
+    color: var(--brand-blue); 
+    font-size: 1.5rem; 
+    margin-bottom: 15px; 
+    line-height: 1.4; 
+}
+
+.news-desc {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1; 
+}
+
+/* --- 4. 個別卡片設定 --- */
+
+/* [News 1] 創作者聯盟 (全寬 Hero News) */
+.hero-news {
+    grid-column: span 3;
+    flex-direction: row; 
+    align-items: center;
+    gap: 40px;
+    background: rgba(255, 255, 255, 0.85); 
+}
+
+.hero-content { flex: 2; }
+
+.hero-visual {
+    flex: 1;
+    background: var(--accent-yellow);
+    height: 100%;
+    min-height: 250px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    color: var(--brand-blue);
+    transform: rotate(3deg);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.highlight-list {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.highlight-item {
+    background: rgba(23, 54, 245, 0.1);
+    color: var(--brand-blue);
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* [News 2] 優惠活動 (佔2格) */
+.promo-card {
+    grid-column: span 2;
+}
+.promo-code-box {
+    border: 2px dashed var(--brand-blue);
+    padding: 15px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.5);
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* 優惠期限文字加粗 */
+.promo-text { 
+    color: var(--brand-blue); 
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 900;
+}
+
+/* [News 3] 合作發布 (佔1格) */
+.info-card {
+    grid-column: span 1;
+}
+
+/* 按鈕樣式 */
+.action-btn {
+    display: inline-block;
+    background: var(--brand-blue);
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(23, 54, 245, 0.3);
+}
+.action-btn:hover { background: var(--accent-yellow); color: var(--brand-blue); }
+
+/* --- 導覽列 --- */
+.dock-nav {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(20px);
+    padding: 15px 30px;
+    border-radius: 50px;
+    display: flex;
+    gap: 20px;
+    border: 1px solid rgba(255,255,255,0.4);
+    z-index: 100;
+}
+.dock-nav a { text-decoration: none; color: #fff; font-weight: bold; transition: 0.2s; }
+.dock-nav a:hover { color: var(--accent-yellow); transform: translateY(-3px); }
+
+/* RWD */
+@media (max-width: 900px) {
+    .container { grid-template-columns: 1fr; }
+    .header-card, .hero-news, .promo-card, .info-card { 
+        grid-column: span 1; 
+        overflow: hidden;
+    }
+    .hero-news { flex-direction: column-reverse; text-align: left; }
+    .hero-visual { width: 100%; min-height: 150px; transform: rotate(0); }
+    .dock-nav { 
+        width: 90%; 
+        justify-content: space-between; 
+        padding: 12px 20px; 
+        gap: 10px;
+        bottom: 20px;
+    }
+    .dock-nav a { font-size: 0.85rem; }
+    
+    /* 手機版調整漂浮圖片位置 */
+    .floating-mascot {
+        width: 250px;
+        right: -50px;
+        top: -30px;
+        z-index: -1;
+        /* filter: grayscale(90%); */
+        filter: blur(1px);
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 560px) {
+    .floating-mascot {
+        /* display: none; */
+    }
+}

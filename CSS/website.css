@@ -1,0 +1,246 @@
+/* --- 1. 核心設定 --- */
+:root {
+    --brand-blue: #1736F5;
+    --brand-dark: #0b1a7a;
+    --accent-yellow: #FFC709;
+    --text-dark: #333333;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--brand-blue);
+    background-image: radial-gradient(circle at 50% 10%, #4c6aff 0%, var(--brand-blue) 40%, var(--brand-dark) 100%);
+    /* 預設字體 */
+    font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px 120px 20px;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* --- 2. 標題區 (透明度 0.8) --- */
+.header-card {
+    grid-column: span 3;
+    background: rgba(255, 255, 255, 1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 30px;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+/* [修改] H1 大標題設定 */
+.header-content h1 { 
+    /* 指定特粗黑體 */
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 900;
+    
+    font-size: 3rem; 
+    margin-bottom: 10px; 
+    color: var(--brand-blue); 
+    /* 讓 icon 與文字垂直置中 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* Icon 與文字的間距 */
+}
+
+.header-content p { 
+    font-size: 1.2rem; 
+    color: #333; 
+    font-weight: 600;
+}
+
+.header-tag {
+    background: var(--accent-yellow);
+    color: var(--brand-blue);
+    font-weight: 900;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+/* --- 3. 方案卡片 (透明度 0.7) --- */
+.plan-card {
+    grid-column: span 1;
+    background: rgba(222, 222, 222, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.plan-card:hover {
+    background: rgba(222, 222, 222, 1);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.plan-header {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+/* [修改] 方案標題 (基本款/進階款...) */
+.plan-title {
+    /* 指定特粗黑體 */
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 900;
+    
+    font-size: 1.8rem;
+    color: var(--brand-blue);
+    margin-bottom: 5px;
+}
+
+.plan-subtitle {
+    font-size: 1rem;
+    color: #555;
+    font-weight: bold;
+}
+
+.plan-target {
+    background: rgba(23, 54, 245, 1);
+    color: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.plan-features {
+    list-style: none;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.plan-features li {
+    margin-bottom: 12px;
+    color: #333;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 199, 9, 0.8);
+    padding: 8px 15px;
+    border-radius: 50px;
+}
+
+.plan-features li i { color: var(--brand-blue); }
+
+.note-box {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed rgba(0,0,0,0.2);
+    line-height: 1.4;
+}
+
+.cta-btn {
+    background: var(--brand-blue);
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-top: 15px;
+    box-shadow: 0 5px 15px rgba(23, 54, 245, 0.3);
+}
+.cta-btn:hover { background: var(--accent-yellow); color: var(--brand-blue); }
+
+/* --- 4. 客製化方案 (橫跨全寬) --- */
+.custom-card {
+    grid-column: span 3;
+    background: linear-gradient(135deg, rgba(255, 199, 9, 0.9), rgba(255, 220, 90, 0.9));
+    color: #333;
+    border-radius: 30px;
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* [修改] 客製款標題 */
+.custom-content h2 { 
+    /* 指定特粗黑體 */
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 900;
+    
+    font-size: 2.2rem; 
+    margin-bottom: 10px; 
+    color: var(--brand-blue); 
+}
+.custom-content p { font-size: 1.1rem; max-width: 600px; line-height: 1.6; }
+
+.custom-price {
+    text-align: right;
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* --- 5. 導覽列 --- */
+.dock-nav {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(20px);
+    padding: 15px 30px;
+    border-radius: 50px;
+    display: flex;
+    gap: 20px;
+    border: 1px solid rgba(255,255,255,0.4);
+    z-index: 100;
+}
+.dock-nav a { text-decoration: none; color: #fff; font-weight: bold; transition: 0.2s; }
+.dock-nav a:hover { color: var(--accent-yellow); transform: translateY(-3px); }
+
+/* RWD */
+@media (max-width: 900px) {
+    .container { grid-template-columns: 1fr; }
+    .header-card, .plan-card, .custom-card { grid-column: span 1; }
+    .custom-card { flex-direction: column; text-align: left; gap: 20px; align-items: flex-start; }
+    .custom-price { width: 100%; text-align: center; }
+    .dock-nav { 
+        width: 90%; 
+        justify-content: space-between; 
+        padding: 12px 20px; 
+        gap: 10px;
+        bottom: 20px;
+    }
+    .dock-nav a { font-size: 0.85rem; }
+    
+    /* 手機版標題調整 */
+    .header-content h1 { font-size: 2.2rem; flex-direction: column; gap: 10px; }
+}

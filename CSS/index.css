@@ -1,0 +1,457 @@
+/* --- 1. 核心設定 --- */
+:root {
+    --brand-blue: #1736F5;      /* 你的品牌藍 */
+    --brand-dark: #0b1a7a;      /* 深藍陰影用 */
+    --accent-yellow: #FFC709;   /* 你的品牌黃 */
+    --card-bg: rgba(255, 255, 255, 0.1); /* 玻璃質感背景 */
+    --card-border: rgba(255, 255, 255, 0.2);
+    --text-white: #ffffff;
+    --text-gray: #DEDEDE;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--brand-blue);
+    background-image: radial-gradient(circle at 80% 20%, #2a4df8 0%, var(--brand-blue) 40%, var(--brand-dark) 100%);
+    font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    color: var(--text-white);
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-bottom: 120px; 
+    overflow-x: hidden; 
+}
+
+/* --- 2. Bento Grid 佈局 --- */
+.bento-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    grid-auto-rows: minmax(180px, auto);
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--card-border);
+    border-radius: 30px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover { 
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+/* --- 3. 個別區塊設定 --- */
+.hero-card {
+    grid-column: span 4;
+    grid-row: span 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 0;
+    overflow: visible; 
+    min-height: 400px;
+}
+
+.hero-text-content {
+    flex: 1;
+    padding-right: 20px;
+    z-index: 2;
+}
+
+.services-card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* [修改] 標題區塊設定：增加下方間距，讓 icon 往下移 */
+.services-title {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 40px; /* 從 10px 增加到 40px */
+}
+
+/* [修改] 服務項目網格設定：改用 Grid 以便對齊 */
+.services-grid {
+    display: grid; /* 改用 Grid */
+    grid-template-columns: repeat(4, 1fr); /* 強制 4 欄等寬 */
+    gap: 20px;
+    width: 100%;
+    justify-content: center; /* 讓整個網格置中 */
+    align-items: flex-start;
+    margin-bottom: 30px; /* 增加底部間距，與按鈕分開 */
+}
+
+.about-card { grid-column: span 2; }
+.contact-cta-card { 
+    grid-column: span 2; 
+    background: var(--accent-yellow); 
+    color: #333; 
+    border: none;
+}
+
+/* --- 4. 動畫與圖片 --- */
+@keyframes subtle-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+.main-mascot {
+    flex: 1;
+    max-width: 50%;
+    height: 120%;
+    object-fit: contain;
+    object-position: center right;
+    transform-origin: center center;
+    animation: subtle-float 6s ease-in-out infinite;
+    pointer-events: none;
+    margin-right: -5%; 
+    margin-top: -5%;
+}
+
+/* --- 5. 字體設定 (重點修改區) --- */
+
+/* H1 主標題 (維持特粗) */
+h1 { 
+    font-family: 'Noto Sans TC', sans-serif; 
+    font-weight: 900; 
+    font-size: 3rem; 
+    line-height: 1.2; 
+    text-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+    margin: 15px 0; 
+    letter-spacing: -1px; 
+}
+h1 span { color: var(--accent-yellow); }
+
+/* H3 區塊標題 (維持特粗) */
+h3 { 
+    font-family: 'Noto Sans TC', sans-serif; 
+    font-weight: 900;
+    font-size: 1.5rem; 
+    margin-bottom: 15px; 
+    letter-spacing: 0.5px;
+}
+
+/* H4 小標題 (服務項目：社群/網紅/網站/系統) - 修改為不粗 */
+h4 {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; /* 改成 500 (中等) 或 400 (一般) */
+    letter-spacing: 1px; /* 增加一點字距讓細字更有質感 */
+}
+
+p { line-height: 1.6; opacity: 0.9; font-size: 1rem; }
+
+.tag {
+    background: var(--accent-yellow);
+    color: #000;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+/* 圓形按鈕 */
+.btn-circle {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--brand-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+}
+.btn-circle i { display: block; line-height: inherit; }
+.btn-circle:hover { transform: scale(1.1); }
+
+
+/* --- 服務項目 Icon 切換特效 --- */
+/* [修改] 項目設定：填滿格子並置中 */
+.service-item {
+    text-align: center;
+    cursor: pointer;
+    width: 100%;      /* 填滿 Grid 的一格 */
+    display: flex;    /* 彈性盒模型 */
+    flex-direction: column; /* 垂直排列 (圖在上字在下) */
+    align-items: center;    /* 水平置中 */
+    text-decoration: none;  /* 移除超連結底線 */
+    color: inherit;         /* 繼承文字顏色 */
+}
+
+.icon-box {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: var(--accent-yellow);
+    transition: all 0.3s ease;
+}
+.icon-box i {
+    position: absolute;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.icon-box .hover-icon { opacity: 0; transform: scale(0.5) rotate(-30deg); }
+.icon-box .default-icon { opacity: 1; transform: scale(1) rotate(0deg); }
+
+.service-item:hover .icon-box .hover-icon { opacity: 1; transform: scale(1.1) rotate(0deg); color: #fff; }
+.service-item:hover .icon-box .default-icon { opacity: 0; transform: scale(0.5) rotate(30deg); }
+.service-item:hover h4 { color: var(--accent-yellow); }
+
+.service-item h4 { transition: color 0.3s; }
+
+.btn-view-more {
+    margin-top: 10px;
+    padding: 10px 30px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--accent-yellow);
+    color: var(--accent-yellow);
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-view-more:hover {
+    background: var(--accent-yellow);
+    color: var(--brand-blue);
+}
+
+/* --- 6. 底部聯絡資訊區塊 --- */
+.footer-contact {
+    grid-column: span 4;
+    background: rgba(11, 26, 122, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    position: relative; 
+    overflow: visible; 
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    padding: 0; 
+    min-height: 280px; 
+}
+
+.corner-astronaut {
+    position: absolute;
+    left: -5%;    
+    bottom: -15%; 
+    height: 135%; 
+    width: auto;
+    object-fit: contain;
+    z-index: 2;    
+    animation: subtle-float 6s ease-in-out infinite;
+}
+
+.footer-content-wrapper {
+    width: 50%; 
+    padding: 40px 50px 40px 0; 
+    z-index: 3; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    justify-content: center;
+    gap: 25px; 
+}
+
+.footer-text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.contact-list {
+    list-style: none;
+    width: 100%;
+    margin-top: 0; 
+}
+
+.contact-list li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    color: var(--text-white);
+}
+
+.contact-list i {
+    color: var(--accent-yellow);
+    width: 30px; 
+    text-align: center;
+    font-size: 1.2rem;
+    margin-right: 15px;
+}
+
+.contact-list a { 
+    color: var(--text-white); 
+    text-decoration: none; 
+    transition: 0.3s; 
+    border-bottom: 1px solid transparent;
+}
+.contact-list a:hover { 
+    color: var(--accent-yellow); 
+    border-color: var(--accent-yellow);
+}
+
+.footer-social-group {
+    padding-top: 0; 
+    width: 100%;
+}
+
+.social-links { 
+    display: flex; 
+    gap: 20px; 
+    justify-content: flex-start;
+}
+
+.social-btn {
+    width: 50px; height: 50px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+}
+.social-btn:hover { transform: translateY(-5px); }
+.social-btn.fb:hover { background: #1877F2; border-color: #1877F2; box-shadow: 0 0 15px rgba(24, 119, 242, 0.6); }
+.social-btn.ig:hover { background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); border-color: transparent; box-shadow: 0 0 15px rgba(220, 39, 67, 0.6); }
+.social-btn.line:hover { background: #00C300; border-color: #00C300; box-shadow: 0 0 15px rgba(0, 195, 0, 0.6); }
+
+/* --- 導覽列 --- */
+.dock-nav {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(11, 26, 122, 0.6);
+    backdrop-filter: blur(20px);
+    padding: 12px 40px;
+    border-radius: 50px;
+    display: flex;
+    gap: 30px;
+    border: 1px solid rgba(255,255,255,0.2);
+    z-index: 100;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.dock-nav a { 
+    text-decoration: none; 
+    color: var(--text-gray); 
+    font-weight: 500; 
+    transition: all 0.3s; 
+    font-size: 0.95rem;
+    position: relative;
+}
+.dock-nav a:hover, .dock-nav a.active { color: var(--text-white); }
+.dock-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent-yellow);
+    transition: all 0.3s ease-out;
+    transform: translateX(-50%);
+}
+.dock-nav a:hover::after { width: 80%; }
+
+
+/* --- RWD 手機版調整 --- */
+@media (max-width: 768px) {
+    body { padding-bottom: 100px; align-items: flex-start; }
+    .bento-container { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 15px; }
+    
+    .hero-card { 
+        /* grid-column: span 1;  */
+        flex-direction: column-reverse; 
+        text-align: center; 
+        padding: 30px 20px;
+        min-height: auto;
+    }
+    .hero-text-content { padding-right: 0; }
+    .main-mascot { 
+        max-width: 70%; 
+        height: auto; 
+        margin: 0 0 20px 0; 
+        object-position: center;
+    }
+    h1 { font-size: 2.2rem; }
+
+    .services-card { padding: 25px; }
+    
+    /* [修改] 手機版服務網格：改成 2x2 */
+    .services-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 30px; 
+    }
+    .service-item { width: 100%; } /* 確保手機版也填滿 */
+
+    .about-card, .contact-cta-card { grid-column: span 4; min-height: 200px; }
+
+    /* 手機版 Footer 調整 */
+    .footer-contact {
+        flex-direction: column;
+        min-height: auto;
+        padding-bottom: 0;
+        overflow: visible; 
+    }
+
+    .corner-astronaut {
+        position: relative;
+        width: 90%;
+        height: auto;
+        left: auto;
+        bottom: auto;
+        margin-top: -30px; 
+        margin-bottom: 10px;
+        animation: subtle-float 6s ease-in-out infinite;
+    }
+
+    .footer-content-wrapper {
+        width: 100%;
+        padding: 20px 30px 40px 30px;
+        align-items: flex-start;
+    }
+    
+    .contact-list li { font-size: 1rem; }
+
+    .dock-nav { 
+        width: 90%; 
+        justify-content: space-between; 
+        padding: 12px 20px; 
+        gap: 10px;
+        bottom: 20px;
+    }
+    .dock-nav a { font-size: 0.85rem; }
+}

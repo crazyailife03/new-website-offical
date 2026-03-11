@@ -1,0 +1,227 @@
+/* --- 1. 核心設定 --- */
+:root {
+    --brand-blue: #1736F5;
+    --brand-dark: #0b1a7a;
+    --accent-yellow: #FFC709;
+    --text-dark: #333333;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--brand-blue);
+    background-image: radial-gradient(circle at 50% 10%, #4c6aff 0%, var(--brand-blue) 40%, var(--brand-dark) 100%);
+    font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px 120px 20px;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* --- 2. 標題區 (透明度 0.8) --- */
+.header-card {
+    grid-column: span 3;
+    background: rgba(255, 255, 255, 1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 30px;
+    padding: 40px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* [修改] 大標題加粗 */
+.header-content h1 { 
+    /* 指定特粗黑體 */
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 900;
+    
+    font-size: 3rem; 
+    margin-bottom: 10px; 
+    color: var(--brand-blue); 
+    line-height: 1.1;
+}
+
+.header-content p { 
+    font-size: 1.2rem; 
+    color: #333; 
+    font-weight: 600;
+}
+
+.header-tag {
+    background: var(--accent-yellow);
+    color: var(--brand-blue);
+    font-weight: 900;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+/* --- 3. 核心價值 (黃色強調) --- */
+.value-card {
+    grid-column: span 3;
+    background: var(--accent-yellow);
+    color: var(--brand-blue);
+    border-radius: 30px;
+    padding: 30px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* --- 4. 適用場景 (透明度 0.5) --- */
+.scope-card {
+    grid-column: span 1;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.scope-card h3 { color: var(--brand-blue); font-size: 1.4rem; font-weight: 900; }
+.scope-list li { margin-bottom: 8px; list-style: none; font-weight: 600; }
+.scope-list li::before { content: '• '; color: var(--brand-blue); }
+
+/* --- 5. 開發流程步驟 (重點區) --- */
+.process-title-card {
+    grid-column: span 3;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+/* [修改] 流程大標題加粗 (選擇性，若需要也可加 font-family) */
+.process-title-card h2 { font-size: 2.5rem; text-shadow: 0 0 10px rgba(0,0,0,0.3); font-weight: 900; }
+
+.step-card {
+    grid-column: span 1;
+    background: rgba(255, 199, 9, 0.85);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+}
+
+.step-card:hover { transform: translateY(-5px); background: rgba(255, 199, 9,1); }
+
+.step-num {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--brand-blue);
+    opacity: 0.15;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+/* [修改] 步驟卡片標題加粗 */
+.step-card h3 { 
+    /* 指定特粗黑體 */
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 900;
+    
+    font-size: 1.5rem; 
+    color: var(--brand-blue); 
+    margin-bottom: 15px; 
+    position: relative; 
+    z-index: 2; 
+}
+
+.step-card p { color: #444; line-height: 1.5; font-weight: 600; position: relative; z-index: 2; }
+
+.step-icon {
+    font-size: 2rem;
+    color: var(--accent-yellow);
+    margin-bottom: 15px;
+    background: rgba(23, 54, 245, 1);
+    width: 50px; height: 50px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* --- 6. CTA --- */
+.cta-card {
+    grid-column: span 3;
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 30px;
+}
+
+.cta-btn {
+    background: var(--accent-yellow);
+    color: var(--brand-blue);
+    padding: 15px 50px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 1.2rem;
+    display: inline-block;
+    box-shadow: 0 5px 20px rgba(255, 199, 9, 0.4);
+    transition: 0.3s;
+}
+.cta-btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(255, 199, 9, 0.6); }
+
+/* --- 導覽列 --- */
+.dock-nav {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(20px);
+    padding: 15px 30px;
+    border-radius: 50px;
+    display: flex;
+    gap: 20px;
+    border: 1px solid rgba(255,255,255,0.4);
+    z-index: 100;
+}
+.dock-nav a { text-decoration: none; color: #fff; font-weight: bold; transition: 0.2s; }
+.dock-nav a:hover { color: var(--accent-yellow); transform: translateY(-3px); }
+
+/* RWD */
+@media (max-width: 900px) {
+    .container { grid-template-columns: 1fr; }
+    .header-card, .value-card, .scope-card, .step-card, .process-title-card, .cta-card { grid-column: span 1; }
+    .dock-nav { 
+        width: 90%; 
+        justify-content: space-between; 
+        padding: 12px 20px; 
+        gap: 10px;
+        bottom: 20px;
+    }
+    .dock-nav a { font-size: 0.85rem; }
+}
