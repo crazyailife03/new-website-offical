@@ -106,15 +106,14 @@ body {
 }
 
 /* --- 4. 動畫與圖片 --- */
-@keyframes subtle-float {
+/* @keyframes subtle-float {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-15px) rotate(1deg); }
-}
+} */
 
 .main-mascot {
     flex: 1;
     max-width: 50%;
-    height: 120%;
     object-fit: contain;
     object-position: center right;
     transform-origin: center center;
@@ -396,6 +395,7 @@ p { line-height: 1.6; opacity: 0.9; font-size: 1rem; }
         flex-direction: column-reverse; 
         text-align: center; 
         padding: 30px 20px;
+        min-height: auto;
     }
     .hero-text-content { padding-right: 0; }
     .main-mascot { 
