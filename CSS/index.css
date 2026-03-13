@@ -57,13 +57,12 @@ body {
 /* --- 3. 個別區塊設定 --- */
 .hero-card {
     grid-column: span 4;
-    grid-row: span 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-right: 0;
     overflow: visible; 
-    min-height: 400px;
+    /* min-height: 400px; */
 }
 
 .hero-text-content {
