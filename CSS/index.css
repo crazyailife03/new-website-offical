@@ -117,7 +117,7 @@ body {
     object-fit: contain;
     object-position: center right;
     transform-origin: center center;
-    animation: subtle-float 6s ease-in-out infinite;
+    /* animation: subtle-float 6s ease-in-out infinite; */
     pointer-events: none;
     margin-right: -5%; 
     margin-top: -5%;
@@ -395,12 +395,11 @@ p { line-height: 1.6; opacity: 0.9; font-size: 1rem; }
         flex-direction: column-reverse; 
         text-align: center; 
         padding: 30px 20px;
-        min-height: auto;
+        /* min-height: auto; */
     }
     .hero-text-content { padding-right: 0; }
     .main-mascot { 
-        max-width: 70%; 
-        height: auto; 
+        max-width: 70%;
         margin: 0 0 20px 0; 
         object-position: center;
         height: 0;
