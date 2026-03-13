@@ -56,6 +56,10 @@ body {
     line-height: 1.1;
 }
 
+.mobile-break{
+    display: none;
+}
+
 .header-content p { 
     font-size: 1.2rem; 
     color: #333; 
@@ -225,4 +229,10 @@ body {
     }
     .dock-nav a { font-size: 0.85rem; }
     .header-content h1 { font-size: 1.8rem; }
+}
+
+@media (max-width: 420px) {
+    .mobile-break {
+        display: inline;
+    }
 }
