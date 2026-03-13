@@ -57,7 +57,7 @@ body {
 /* --- 3. 個別區塊設定 --- */
 .hero-card {
     grid-column: span 4;
-    grid-row: span 2;
+    grid-row: span 1;
     display: flex;
     justify-content: space-between;
     align-items: center;

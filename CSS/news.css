@@ -34,7 +34,7 @@ body {
     background: rgba(255, 255, 255, 1);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 30px;
     padding: 40px;
     text-align: left;
@@ -286,5 +286,12 @@ body {
 @media (max-width: 560px) {
     .floating-mascot {
         /* display: none; */
+    }
+}
+
+@media (max-width: 420px) {
+    .promo-code-box {
+        flex-direction: column;
+        gap: 2rem;
     }
 }
