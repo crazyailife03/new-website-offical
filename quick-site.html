@@ -135,36 +135,60 @@
                 Nest Digital
             </div>
 
-            <div class="loading-title">正在處理你的需求</div>
-            <div class="loading-sub">請保持此頁面開啟，完成後會自動顯示結果</div>
+            <!-- 第一階段：n8n 處理中 -->
+            <div id="phaseProcess">
+                <div class="loading-title">正在處理你的需求</div>
+                <div class="loading-sub">請保持此頁面開啟，完成後會自動顯示結果</div>
 
-            <div class="loading-spinner">
-                <div class="spinner-ring"></div>
-                <div class="spinner-core"><i class="fas fa-bolt"></i></div>
+                <div class="loading-spinner">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-core"><i class="fas fa-bolt"></i></div>
+                </div>
+
+                <ul class="loading-steps">
+                    <li class="step step--done" id="step1">
+                        <span class="step-icon"><i class="fas fa-check"></i></span>
+                        <span>接收需求資料</span>
+                    </li>
+                    <li class="step step--active" id="step2">
+                        <span class="step-icon"><i class="fas fa-spinner fa-spin"></i></span>
+                        <span>AI 分析品牌定位</span>
+                    </li>
+                    <li class="step step--pending" id="step3">
+                        <span class="step-icon"><i class="fas fa-circle"></i></span>
+                        <span>規劃網站架構</span>
+                    </li>
+                    <li class="step step--pending" id="step4">
+                        <span class="step-icon"><i class="fas fa-circle"></i></span>
+                        <span>生成頁面內容</span>
+                    </li>
+                    <li class="step step--pending" id="step5">
+                        <span class="step-icon"><i class="fas fa-circle"></i></span>
+                        <span>完成準備</span>
+                    </li>
+                </ul>
             </div>
 
-            <ul class="loading-steps" id="loadingSteps">
-                <li class="step step--done" id="step1">
-                    <span class="step-icon"><i class="fas fa-check"></i></span>
-                    <span>接收需求資料</span>
-                </li>
-                <li class="step step--active" id="step2">
-                    <span class="step-icon"><i class="fas fa-spinner fa-spin"></i></span>
-                    <span>AI 分析品牌定位</span>
-                </li>
-                <li class="step step--pending" id="step3">
-                    <span class="step-icon"><i class="fas fa-circle"></i></span>
-                    <span>規劃網站架構</span>
-                </li>
-                <li class="step step--pending" id="step4">
-                    <span class="step-icon"><i class="fas fa-circle"></i></span>
-                    <span>生成頁面內容</span>
-                </li>
-                <li class="step step--pending" id="step5">
-                    <span class="step-icon"><i class="fas fa-circle"></i></span>
-                    <span>完成準備</span>
-                </li>
-            </ul>
+            <!-- 第二階段：GitHub Pages 部署倒數 -->
+            <div id="phaseDeploy" style="display:none;">
+                <div class="loading-title">GitHub Pages 部署中</div>
+                <div class="loading-sub">網站正在上線，完成後將自動開啟結果</div>
+
+                <div class="countdown-wrap">
+                    <svg class="countdown-ring" viewBox="0 0 120 120">
+                        <circle class="countdown-ring__bg" cx="60" cy="60" r="52"/>
+                        <circle class="countdown-ring__bar" id="countdownBar" cx="60" cy="60" r="52"/>
+                    </svg>
+                    <div class="countdown-number" id="countdownNumber">3:00</div>
+                </div>
+
+                <div class="deploy-progress-wrap">
+                    <div class="deploy-progress-bar" id="deployProgressBar"></div>
+                </div>
+                <div class="deploy-hint">
+                    <i class="fas fa-info-circle"></i> 請保持此頁面開啟
+                </div>
+            </div>
 
         </div>
     </div>
@@ -380,22 +404,29 @@
 
         // ── 顯示結果 ──
         function showResult(data) {
-            hideLoading();
-            renderResult(data);
-            document.getElementById('resultOverlay').classList.add('visible');
-            document.body.style.overflow = '';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (data.success && data.site_url) {
+                // 先填好結果內容，再進入部署倒數
+                prepareResult(data);
+                finishSteps(() => startDeployCountdown(180));
+            } else {
+                // 失敗直接顯示錯誤
+                finishSteps(() => {
+                    hideLoading();
+                    prepareResult(data);
+                    document.getElementById('resultOverlay').classList.add('visible');
+                    document.body.style.overflow = '';
+                });
+            }
         }
 
-        // ── 處理 n8n 回傳結果 ──
-        function renderResult(data) {
+        // ── 填入結果卡片內容（不顯示畫面）──
+        function prepareResult(data) {
             const urlCard  = document.getElementById('resultUrlCard');
             const failCard = document.getElementById('resultFailCard');
 
             if (data.success && data.site_url) {
-                const url = data.site_url;
-                document.getElementById('resultSiteUrl').href = url;
-                document.getElementById('resultUrlText').textContent = url;
+                document.getElementById('resultSiteUrl').href = data.site_url;
+                document.getElementById('resultUrlText').textContent = data.site_url;
                 urlCard.style.display  = '';
                 failCard.style.display = 'none';
             } else {
@@ -404,6 +435,51 @@
                 document.getElementById('resultFailMsg').textContent =
                     data.message || '架設過程發生問題，請聯絡我們處理。';
             }
+        }
+
+        // ── GitHub Pages 部署倒數 ──
+        const DEPLOY_SECONDS = 180;
+        const CIRCUMFERENCE = 2 * Math.PI * 52; // r=52
+
+        function startDeployCountdown(totalSecs) {
+            // 切換到第二階段畫面
+            document.getElementById('phaseProcess').style.display = 'none';
+            document.getElementById('phaseDeploy').style.display  = '';
+
+            const bar    = document.getElementById('countdownBar');
+            const number = document.getElementById('countdownNumber');
+            const prog   = document.getElementById('deployProgressBar');
+
+            bar.style.strokeDasharray  = CIRCUMFERENCE;
+            bar.style.strokeDashoffset = 0;
+
+            let remaining = totalSecs;
+
+            function tick() {
+                const m = String(Math.floor(remaining / 60)).padStart(1, '0');
+                const s = String(remaining % 60).padStart(2, '0');
+                number.textContent = `${m}:${s}`;
+
+                const ratio = remaining / totalSecs;
+                bar.style.strokeDashoffset = CIRCUMFERENCE * ratio;
+                prog.style.width = `${(1 - ratio) * 100}%`;
+
+                if (remaining <= 0) {
+                    revealResult();
+                    return;
+                }
+                remaining--;
+                setTimeout(tick, 1000);
+            }
+
+            tick();
+        }
+
+        function revealResult() {
+            hideLoading();
+            document.getElementById('resultOverlay').classList.add('visible');
+            document.body.style.overflow = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function escapeHtml(str) {
@@ -419,6 +495,7 @@
         function resetPage() {
             document.getElementById('resultOverlay').classList.remove('visible');
             document.getElementById('siteForm').reset();
+
             // 重置步驟狀態
             document.getElementById('step1').className = 'step step--done';
             ['step2','step3','step4','step5'].forEach(id => {
@@ -427,6 +504,13 @@
                 el.querySelector('.step-icon').innerHTML = '<i class="fas fa-circle"></i>';
             });
             stepTimers = [];
+
+            // 重置兩個階段
+            document.getElementById('phaseProcess').style.display = '';
+            document.getElementById('phaseDeploy').style.display  = 'none';
+            document.getElementById('deployProgressBar').style.width = '0%';
+            document.getElementById('countdownNumber').textContent = '3:00';
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 

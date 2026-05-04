@@ -513,6 +513,70 @@ body {
     white-space: pre-wrap;
 }
 
+/* ── 部署倒數 ── */
+.countdown-wrap {
+    position: relative;
+    width: 140px; height: 140px;
+    margin: 28px auto 24px;
+}
+
+.countdown-ring {
+    width: 100%; height: 100%;
+    transform: rotate(-90deg);
+}
+
+.countdown-ring__bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.08);
+    stroke-width: 6;
+}
+
+.countdown-ring__bar {
+    fill: none;
+    stroke: var(--accent-yellow);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.countdown-number {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.04em;
+}
+
+.deploy-progress-wrap {
+    background: rgba(255,255,255,0.1);
+    border-radius: 50px;
+    height: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.deploy-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--accent-yellow);
+    border-radius: 50px;
+    transition: width 1s linear;
+}
+
+.deploy-hint {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
 /* ── 網站 URL 卡片 ── */
 .result-url-card {
     background: #fff;
