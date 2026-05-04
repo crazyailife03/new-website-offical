@@ -169,7 +169,7 @@
                 </ul>
             </div>
 
-            <!-- 第二階段：GitHub Pages 部署倒數 -->
+            <!-- 第二階段：GitHub Pages 部署中 -->
             <div id="phaseDeploy" style="display:none;">
                 <div class="loading-title">GitHub Pages 部署中</div>
                 <div class="loading-sub">網站正在上線，完成後將自動開啟結果</div>
@@ -179,12 +179,9 @@
                         <circle class="countdown-ring__bg" cx="60" cy="60" r="52"/>
                         <circle class="countdown-ring__bar" id="countdownBar" cx="60" cy="60" r="52"/>
                     </svg>
-                    <div class="countdown-number" id="countdownNumber">3:00</div>
+                    <div class="countdown-number" id="countdownNumber">0%</div>
                 </div>
 
-                <div class="deploy-progress-wrap">
-                    <div class="deploy-progress-bar" id="deployProgressBar"></div>
-                </div>
                 <div class="deploy-hint">
                     <i class="fas fa-info-circle"></i> 請保持此頁面開啟
                 </div>
@@ -215,13 +212,6 @@
                     <span id="resultUrlText">—</span>
                     <i class="fas fa-external-link-alt"></i>
                 </a>
-                <div class="result-url-notice">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <strong>網站部署需要 1 ~ 3 分鐘</strong>，部署完成前點擊連結可能會看到 404 頁面，
-                        屬於正常現象。請稍等片刻後<strong>重新整理</strong>即可正常顯示。
-                    </div>
-                </div>
             </div>
 
             <!-- 失敗提示（success: false 時顯示）-->
@@ -407,7 +397,7 @@
             if (data.success && data.site_url) {
                 // 先填好結果內容，再進入部署倒數
                 prepareResult(data);
-                finishSteps(() => startDeployCountdown(180));
+                finishSteps(() => startDeployCountdown());
             } else {
                 // 失敗直接顯示錯誤
                 finishSteps(() => {
@@ -437,39 +427,50 @@
             }
         }
 
-        // ── GitHub Pages 部署倒數 ──
-        const DEPLOY_SECONDS = 180;
+        // ── GitHub Pages 部署進度 ──
         const CIRCUMFERENCE = 2 * Math.PI * 52; // r=52
 
-        function startDeployCountdown(totalSecs) {
-            // 切換到第二階段畫面
+        function startDeployCountdown() {
             document.getElementById('phaseProcess').style.display = 'none';
             document.getElementById('phaseDeploy').style.display  = '';
 
             const bar    = document.getElementById('countdownBar');
             const number = document.getElementById('countdownNumber');
-            const prog   = document.getElementById('deployProgressBar');
 
             bar.style.strokeDasharray  = CIRCUMFERENCE;
-            bar.style.strokeDashoffset = 0;
+            bar.style.strokeDashoffset = CIRCUMFERENCE; // 從空開始
 
-            let remaining = totalSecs;
+            // 總時長隨機 180 ~ 300 秒
+            const totalMs = (180 + Math.random() * 120) * 1000;
+            const startTime = performance.now();
+            let currentPct = 0;
 
             function tick() {
-                const m = String(Math.floor(remaining / 60)).padStart(1, '0');
-                const s = String(remaining % 60).padStart(2, '0');
-                number.textContent = `${m}:${s}`;
+                const elapsed = performance.now() - startTime;
+                const naturalPct = Math.min(elapsed / totalMs, 1) * 100;
 
-                const ratio = remaining / totalSecs;
-                bar.style.strokeDashoffset = CIRCUMFERENCE * ratio;
-                prog.style.width = `${(1 - ratio) * 100}%`;
+                // 隨機停頓：20% 機率這一幀不推進
+                const stall = Math.random() < 0.20;
+                if (!stall) {
+                    // 隨機速度：0.5x ~ 2x 自然進度，但不超過自然進度太多
+                    const speed = 0.5 + Math.random() * 1.5;
+                    const target = Math.min(naturalPct * speed, naturalPct + 8, 99);
+                    currentPct = Math.max(currentPct, target);
+                }
 
-                if (remaining <= 0) {
-                    revealResult();
+                number.textContent = `${Math.floor(currentPct)}%`;
+                bar.style.strokeDashoffset = CIRCUMFERENCE * (1 - currentPct / 100);
+
+                if (elapsed >= totalMs) {
+                    // 時間到：跑到 100% 後切換畫面
+                    number.textContent = '100%';
+                    bar.style.strokeDashoffset = 0;
+                    setTimeout(revealResult, 400);
                     return;
                 }
-                remaining--;
-                setTimeout(tick, 1000);
+
+                // 下一幀間隔隨機 200 ~ 800ms，模擬不規律推進
+                setTimeout(tick, 200 + Math.random() * 600);
             }
 
             tick();
@@ -508,8 +509,8 @@
             // 重置兩個階段
             document.getElementById('phaseProcess').style.display = '';
             document.getElementById('phaseDeploy').style.display  = 'none';
-            document.getElementById('deployProgressBar').style.width = '0%';
-            document.getElementById('countdownNumber').textContent = '3:00';
+            document.getElementById('countdownNumber').textContent = '0%';
+            document.getElementById('countdownBar').style.strokeDashoffset = CIRCUMFERENCE;
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }

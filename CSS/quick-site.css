@@ -552,22 +552,6 @@ body {
     letter-spacing: 0.04em;
 }
 
-.deploy-progress-wrap {
-    background: rgba(255,255,255,0.1);
-    border-radius: 50px;
-    height: 4px;
-    overflow: hidden;
-    margin-bottom: 16px;
-}
-
-.deploy-progress-bar {
-    height: 100%;
-    width: 0%;
-    background: var(--accent-yellow);
-    border-radius: 50px;
-    transition: width 1s linear;
-}
-
 .deploy-hint {
     font-size: 0.8rem;
     color: rgba(255,255,255,0.35);
@@ -622,26 +606,6 @@ body {
 }
 
 .result-url-link i { flex-shrink: 0; font-size: 0.9rem; }
-
-.result-url-notice {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    background: #fffbea;
-    border: 1px solid rgba(255,199,9,0.5);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    font-size: 0.88rem;
-    color: #5a4800;
-    line-height: 1.7;
-}
-
-.result-url-notice i {
-    color: #c8960a;
-    font-size: 1rem;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
 
 /* ── 失敗提示卡片 ── */
 .result-fail-card {
